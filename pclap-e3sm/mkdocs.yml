@@ -6,3 +6,7 @@ nav:
   - E3SM: e3sm_index.md
   - SCREAM: scream_index.md
 theme: windmill
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+markdown_extensions:
+  - mdx_math
