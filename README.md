@@ -21,7 +21,7 @@ cd pclap-docs/pclap-e3sm
 mkdocs serve
 ```
 
-**Math:** You can write mathematical expressions via [MathJax](https://docs.mathjax.org/en/latest/) javascript with inline delimiters \( \), e.g., `\(f(x) = x^2\)`; a centered equation can be written between $$ and $$,
+**Math:** You can write mathematical expressions via [MathJax](https://docs.mathjax.org/en/latest/) javascript with inline delimiters `\(` `\)`, e.g., `\(f(x) = x^2\)`; a centered equation can be written between $$ and $$,
 
 ```
 $$ g(x) = {x^3} \over 3 $$
