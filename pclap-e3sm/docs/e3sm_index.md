@@ -1,17 +1,16 @@
 # E3SM
 
-E3SM keeps its most recent documentation at [https://docs.e3sm.org/](https://docs.e3sm.org/).
-It has its own [YouTube channel](https://www.youtube.com/@e3sm-project) where, amongst other subjects, the lectures from a recent tutorial are available.
+**Main E3SM content:**
 
-E3SM's case control system determines how the model is compiled and run; its documentation is at [CIME docs](https://esmci.github.io/cime/versions/master/html/what_cime/index.html).
+- main repository is [https://github.com/E3SM-Project/E3SM](https://github.com/E3SM-Project/E3SM).
+-  E3SM documentation [https://docs.e3sm.org/](https://docs.e3sm.org/)
+- [YouTube channel](https://www.youtube.com/@e3sm-project); amongst other subjects, the lectures from a recent tutorial are available.
+- 
+E3SM's case control system documentation, [CIME docs](https://esmci.github.io/cime/versions/master/html/what_cime/index.html).
 
-Its main repository is [https://github.com/E3SM-Project/E3SM](https://github.com/E3SM-Project/E3SM).
+**For our project's work** however, we will **use the fork [https://github.com/PCLAeroParams/E3SM](https://github.com/PCLAeroParams/E3SM) for all work related to PCLAP.**
 
-However, we will **use the fork [https://github.com/PCLAeroParams/E3SM](https://github.com/PCLAeroParams/E3SM) for all work related to PCLAP.**
-
-**Computing resources**
-
-E3SM is not intended for public use; it is meant to work well on huge computers.  We have access to Sandia's Flight and Solo supercomputers.
+**Computing resources:** E3SM is not intended for public use; it is meant to work well on huge computers.  We have access to Sandia's _Flight_ and _Solo_ supercomputers.
 
 ## Flight
 
