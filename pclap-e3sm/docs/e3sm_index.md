@@ -50,18 +50,18 @@ git submodule update --init --recursive
 E3SM's case control system will attempt to download any input data that it needs and can't find already on Flight.  You will need to set up your environment to handle the Sandia proxy server, as well.  At a minimum, you'll need to define the proxies in your `.bashrc`.   You can find additional help on [Sandia Confluence](https://wiki.sandia.gov/pages/viewpage.action?pageId=227381234#SandiaProxyConfiguration,Troubleshooting&HTTPS/SSLinterception-Environmentconfiguration(System-wide)).
     
 ```{.sh}
-export ALL_PROXY=http://wwwproxy.sandia.gov:80
-export HTTP_PROXY=$(ALL_PROXY)
-export HTTPS_PROXY=$(ALL_PROXY)
-export FTP_PROXY=$(ALL_PROXY)
-export RSYNC_PROXY=$(ALL_PROXY)
-export SOCKS_PROXY=$(ALL_PROXY)
+export ALL_PROXY=http://proxy.sandia.gov:80
+export HTTP_PROXY=$ALL_PROXY
+export HTTPS_PROXY=$ALL_PROXY
+export FTP_PROXY=$ALL_PROXY
+export RSYNC_PROXY=$ALL_PROXY
+export SOCKS_PROXY=$ALL_PROXY
 export NO_PROXY=127.0.0.1,localhost,*.sandia.gov,.sandia.gov,sandia.gov,::1,10.,172.16.,172.17.,192.168.,*.local,.local,169.254/16
-export http_proxy=$(HTTP_PROXY)
-export https_proxy=$(HTTPS_PROXY)
-export ftp_proxy=$(FTP_PROXY)
-export rsync_proxy=$(RSYNC_PROXY)
-export no_proxy=$(NO_PROXY)
+export http_proxy=$HTTP_PROXY
+export https_proxy=$HTTPS_PROXY
+export ftp_proxy=$FTP_PROXY
+export rsync_proxy=$RSYNC_PROXY
+export no_proxy=$NO_PROXY
 ```
     
 and `.wgetrc` files
