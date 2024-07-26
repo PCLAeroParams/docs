@@ -1,0 +1,8 @@
+site_name: PCLAP Docs
+nav:
+  - Home: index.md
+  - TChem: tchem_index.md
+  - PartMC: partmc_index.md
+  - E3SM: e3sm_index.md
+  - SCREAM: scream_index.md
+theme: windmill
