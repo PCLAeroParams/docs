@@ -6,25 +6,25 @@ A place to put documentation for running code either produced or used by the PCL
 
 All of these documentation files refer to the PCLAP forks that exist in the [PCLAP github space](https://github.com/PCLAeroParams).  It's not guaranteed that changes made by PCLAP will be pushed upstream to the main repositories.  
 
-### TChem-Atm
+### [TChem-Atm](tchem_index.md)
 
 Sandia's atmosphere-enabled chemistry solver.
 
 * code: [https://github.com/PCLAeroParams/TChem-atm](https://github.com/PCLAeroParams/TChem-atm)
 
-### PartMC
+### [PartMC](partmc_index.md)
 
 UIUC's particle Monte Carlo aerosol parameterizations.
 
 * code: [https://github.com/PCLAeroParams/partmc](https://github.com/PCLAeroParams/partmc)
 
-### E3SM
+### [E3SM](e3sm_index.md)
 
 The DOE climate model.
 
 * code: [https://github.com/PCLAeroParams/E3SM](https://github.com/PCLAeroParams/E3SM)
 
-### SCREAM
+### [SCREAM](scream_index.md)
 
 The ultra-high resolution DOE climate model.
 

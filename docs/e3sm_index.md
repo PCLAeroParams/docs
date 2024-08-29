@@ -42,12 +42,20 @@ git submodule update --init --recursive
   if [[ $hname =~ $FLIGHT ]]; then
     export SEMS_PLATFORM_OVERRIDE=boca
     source /projects/sems/modulefiles/utils/sems-archive-modules-init.sh
+    module purge
+    module load sems-archive-env
+    module load sems-archive-intel/21.3.0
+    module load sems-archive-openmpi/4.1.4
+    module load sems-archive-netcdf/4.4.1
+    export NETCDF_PATH=$SEMS_NETCDF_ROOT
+    export NETCDFROOT=$SEMS_NETCDF_ROOT
+    export PNETCDFROOT=$SEMS_NETCDF_ROOT
   fi
 ```
 
    These guards check to make sure the host is actually Flight, since it uses a shared file system that could be accessed from other machines, then loads the third-party library modules required by E3SM.  The `SEMS_PLATFORM_OVERRIDE` line is required to allow both Flight and Boca share the same module files.  
     
-E3SM's case control system will attempt to download any input data that it needs and can't find already on Flight.  You will need to set up your environment to handle the Sandia proxy server, as well.  At a minimum, you'll need to define the proxies in your `.bashrc`.   You can find additional help on [Sandia Confluence](https://wiki.sandia.gov/pages/viewpage.action?pageId=227381234#SandiaProxyConfiguration,Troubleshooting&HTTPS/SSLinterception-Environmentconfiguration(System-wide)).
+E3SM's case control system will attempt to download any input data that it needs and can't find already on Flight.  You will need to set up your environment to handle the Sandia proxy server, as well.  At a minimum, you'll need to define the proxies in your `.bashrc` 
     
 ```{.sh}
 export ALL_PROXY=http://proxy.sandia.gov:80
@@ -72,17 +80,65 @@ http_proxy = http://proxy.sandia.gov:80/
 ftp_proxy = http://proxy.sandia.gov:80/
 check_certificate = off
 ```
-    
-    
-    
+
+You can find additional help for proxy issues on [Sandia Confluence](https://wiki.sandia.gov/pages/viewpage.action?pageId=227381234#SandiaProxyConfiguration,Troubleshooting&HTTPS/SSLinterception-Environmentconfiguration(System-wide)).
+
+### An example job script
+
+```{.bash}
+
+# path to your E3SM repository clone
+e3sm_src=$HOME/pclap-e3sm
+
+# case id (use a unique id for each new simulation)
+case_id=test-pclap-e3sm-fork
+
+# pick a compset 
+# to list all available, run $e3sm_src/cime/scripts/query_config --compsets all
+compset=F1850 #F2010, etc. 
+
+# choose a resolution
+resolution=ne4pg2_oQU480 # note: this string must match a pre-existing CIME configuration
+
+# machine-specific stuff
+wcid=FY210162
+mach=flight
+
+# CIME case setup
+case_name=$case_id.$compset.$resolution
+# remove pre-existing directories, if necessary
+rm -rf $case_name
+
+# set up your case, download inputdata if necessary, etc.
+$e3sm_src/cime/scripts/create_newcase -case $case_name -res $resolution -compset $compset -v -project $wcid --handle-preexisting-dirs r --machine $mach --compiler intel
+
+cd $case_name
+
+###########################
+# Parallel job parameters #
+#-------------------------#
+./xmlchange USER_REQUESTED_WALLTIME="00:15:00"
+nthr=1 # number of openmp threads
+ntask=48 # number of mpi ranks
+./xmlchange MAX_MPITASKS_PER_NODE=$ntask
+./xmlchange MAX_TASKS_PER_NODE=$(( $ntask * $nthr ))
+./xmlchange NTASKS=$ntask
+./xmlchange NTHRDS=$nthr
+###########################
+
+./case.setup
+./case.build
+./case.submit
+
+```
     
 ### Troubleshooting
 
-1. Build fails to configure due to missing ELM submodule.  Go back to the E3SM root directory and force the submodules to update again:
+- Build fails to configure due to missing ELM submodule.  Go back to the E3SM root directory and force the submodules to update again:
 
-    ```
-    cd pclap-e3sm
-    git submodule update --init --force --recursive
-    ```
-    
-2. Input data fail to download due to proxy issues with `wget` and `svn`.  Asked for help from the E3SM/CIME team for this one.  Answer TBD.
+```{.sh}
+cd pclap-e3sm
+git submodule update --init --force --recursive
+```
+
+- CIME (the case control system) doesn't populate inputdata filenames correctly; for example, instead of looking for `'/projects/ccsm/inputdata/ice/mpas-seaice/oQU480/partitions/mpas-seaice.graph.info.230422.part.48`, it looks for (and can't find) `/projects/ccsm/inputdata/ice/mpas-seaice/oQU240/.part.48` instead.   This usually means that CIME doesn't understand your grid/resolution combination.       
